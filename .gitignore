@@ -26,6 +26,7 @@ db/*.sqlite3
 
 # various artifacts
 **.war
+*.iml
 *.rbc
 *.sassc
 .redcar/
