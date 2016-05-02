@@ -7,7 +7,7 @@ class VoiceController < ApplicationController
     t = TwilioNumber.find_by_number(params['To'])
     fail && return if t.blank? || !t.assigned
 
-    to_passenger && return if t.reservation.driver_number == (params['To'])
+    to_passenger && return if t.reservation.driver_number == (params['From'])
     to_driver && return if t.reservation.external_numbers.include?(params['From'])
   end
 
