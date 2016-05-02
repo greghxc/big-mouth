@@ -17,20 +17,16 @@ group :production do
   gem 'rails_12factor'
 end
 
-group :development, :test do
+group :development do
   gem 'byebug'
-  gem 'factory_girl_rails'
   gem 'faker'
   gem 'pry-rails'
   gem 'pry-rescue'
   gem 'rspec-rails'
   gem 'rubocop'
   gem 'sqlite3'
-end
-
-group :development do
-  gem 'web-console', '~> 2.0'
   gem 'spring'
+  gem 'web-console', '~> 2.0'
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_21]
   gem 'foreman'
@@ -41,6 +37,7 @@ group :development do
 end
 
 group :test do
+  gem 'factory_girl_rails'
   gem 'capybara'
   gem 'database_cleaner'
   gem 'launchy'
