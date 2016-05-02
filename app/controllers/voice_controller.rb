@@ -8,9 +8,7 @@ class VoiceController < ApplicationController
     fail && return if t.blank? || !t.assigned || t.reservation.external_numbers.include?(params['From'])
 
     response = Twilio::TwiML::Response.new do |r|
-      r.Dial callerId: t.number do |d|
-        t.reservation.driver_number.number.to_s
-      end
+      r.Dial t.reservation.driver_number.number.to_s, callerId: t.number
     end
 
     render_twiml response
