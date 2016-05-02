@@ -5,16 +5,29 @@ class VoiceController < ApplicationController
 
   def connect
     t = TwilioNumber.find_by_number(params['To'])
-    fail && return if t.blank? || !t.assigned || t.reservation.external_numbers.include?(params['From'])
+    fail && return if t.blank? || !t.assigned
 
+    to_passenger && return if t.reservation.driver_number == (params['To'])
+    to_driver && return if t.reservation.external_numbers.include?(params['From'])
+  end
+
+  private
+
+  def to_driver
+    forward(t.reservation.external_numbers.first.number.to_s)
+  end
+
+  def to_passenger
+    forward(t.reservation.driver_number.number.to_s)
+  end
+
+  def forward(number)
     response = Twilio::TwiML::Response.new do |r|
-      r.Dial t.reservation.driver_number.number.to_s, callerId: t.number
+      r.Dial number, callerId: t.number
     end
 
     render_twiml response
   end
-
-  private
 
   def fail
     response = Twilio::TwiML::Response.new do |r|
