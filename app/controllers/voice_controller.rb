@@ -4,10 +4,11 @@ class VoiceController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def connect
-    # fail && return if param[''].blank?
+    t = TwilioNumber.find_by_number(params['To'])
+    fail && return if t.blank? || !t.assigned || t.reservation.external_numbers.include?(params['From'])
+
     response = Twilio::TwiML::Response.new do |r|
-      r.Say 'Hey there. Congrats on integrating Twilio into your Rails 4 app.', :voice => 'alice'
-      r.Play 'http://linode.rabasa.com/cantina.mp3'
+      r.Dial t.reservation.driver_number.number.to_s
     end
 
     render_twiml response
@@ -16,7 +17,11 @@ class VoiceController < ApplicationController
   private
 
   def fail
-    render nothing: true, status: :unprocessable_entity
+    response = Twilio::TwiML::Response.new do |r|
+      r.Say 'You done messed up.'
+    end
+
+    render_twiml response
   end
 
   def set_header
