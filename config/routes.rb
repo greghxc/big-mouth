@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get 'voice/connect'
+  post 'voice/connect'
   get 'reservation/create'
   get 'reservation/destroy'
 end
