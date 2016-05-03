@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'call_routing/dial'
+  get 'call_routing/screen'
+  get 'call_routing/connect'
+
   get 'number_pool/create'
   get 'number_pool/destroy'
 
