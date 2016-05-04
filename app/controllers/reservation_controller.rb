@@ -5,7 +5,8 @@ class ReservationController < ApplicationController
 
   def create
     p_num = pool_number
-    fail && return unless required_params? && !p_num.blank?
+    fail('missing params') && return unless required_params?
+    fail('no numbers available') if p_num.blank?
     p_num.assigned = true
 
     res = Reservation.new(number: params['number'])
@@ -14,7 +15,7 @@ class ReservationController < ApplicationController
 
     p_num.reservation = res
     p_num.save
-    succeed
+    succeed(p_num.number)
   end
 
   def destroy
@@ -33,12 +34,14 @@ class ReservationController < ApplicationController
   def release_number(twilio_number)
   end
 
-  def fail
-    render nothing: true, status: :unprocessable_entity
+  def fail(msg='FAIL')
+    # render nothing: true, status: :unprocessable_entity
+    render test: msg, status: :unprocessable_entity
   end
 
-  def succeed
-    render nothing: true, status: :created
+  def succeed(msg='OK')
+    # render nothing: true, status: :created
+    render test: msg, status: :created
   end
 
   def required_params(action)
