@@ -21,7 +21,7 @@ class CallRoutingController < ApplicationController
   def screen
     response = Twilio::TwiML::Response.new do |r|
       r.Gather action: '/call_routing/connect', numDigits: '1', finishOnKey: '' do
-        r.Say 'Press any key to accept call from your Aces Client.'
+        r.Say 'Press 1 to accept call from your Aces Client.'
       end
       r.Hangup
     end
@@ -30,7 +30,8 @@ class CallRoutingController < ApplicationController
 
   def connect
     response = Twilio::TwiML::Response.new do |r|
-      r.Say 'Connecting'
+      r.Pause length: 3
+      r.Say 'Connecting now'
     end
     render_twiml response
   end
