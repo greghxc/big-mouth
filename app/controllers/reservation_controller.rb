@@ -5,8 +5,8 @@ class ReservationController < ApplicationController
 
   def create
     p_num = pool_number
-    fail('missing params') && return unless required_params?
-    fail('no numbers available') if p_num.blank?
+    fail && return unless required_params?
+    fail if p_num.blank?
     p_num.assigned = true
 
     res = Reservation.new(number: params['number'])
@@ -15,7 +15,7 @@ class ReservationController < ApplicationController
 
     p_num.reservation = res
     p_num.save
-    succeed(p_num.number)
+    succeed
   end
 
   def destroy
@@ -28,20 +28,18 @@ class ReservationController < ApplicationController
   private
 
   def pool_number
-    TwilioNumber.find_by_assigned(false || nil)
+    TwilioNumber.where("assigned = ? or assigned is null", false).first
   end
 
   def release_number(twilio_number)
   end
 
   def fail(msg='FAIL')
-    # render nothing: true, status: :unprocessable_entity
-    render test: msg, status: :unprocessable_entity
+    render nothing: true, status: :unprocessable_entity
   end
 
   def succeed(msg='OK')
-    # render nothing: true, status: :created
-    render test: msg, status: :created
+    render nothing: true, status: :created
   end
 
   def required_params(action)
