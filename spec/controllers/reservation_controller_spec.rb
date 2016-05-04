@@ -6,7 +6,7 @@ RSpec.describe ReservationController, type: :controller do
   let(:external_number) { '+12065551213' }
 
   before(:example) do
-    puts twilio_number.inspect
+    twilio_number
   end
 
   it 'fails with no parameters' do

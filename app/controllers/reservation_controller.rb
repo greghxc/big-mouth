@@ -15,7 +15,7 @@ class ReservationController < ApplicationController
 
     p_num.reservation = res
     p_num.save
-    succeed
+    succeed(p_num.number)
   end
 
   def destroy
@@ -35,11 +35,13 @@ class ReservationController < ApplicationController
   end
 
   def fail(msg='FAIL')
-    render nothing: true, status: :unprocessable_entity
+    response = { status: 'FAIL', number: '' }
+    render json: response, status: :unprocessable_entity
   end
 
-  def succeed(msg='OK')
-    render nothing: true, status: :created
+  def succeed(number)
+    response = { status: 'OK', number: number }
+    render json: response, status: :created
   end
 
   def required_params(action)
