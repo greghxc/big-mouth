@@ -1,4 +1,8 @@
 class ReservationController < ApplicationController
+  def index
+    render text: Reservation.all.to_json
+  end
+
   def create
     p_num = pool_number
     fail && return unless required_params? && !p_num.blank?

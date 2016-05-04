@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   get 'number_pool/create'
   get 'number_pool/destroy'
+  get 'number_pool/index'
 
   get 'voice/connect'
   post 'voice/connect'
@@ -14,4 +15,6 @@ Rails.application.routes.draw do
 
   get 'reservation/destroy'
   post 'reservation/destroy'
+
+  get 'reservation/index'
 end
