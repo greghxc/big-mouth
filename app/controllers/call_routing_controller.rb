@@ -10,7 +10,7 @@ class CallRoutingController < ApplicationController
     twilio_number = t.number
 
     response = Twilio::TwiML::Response.new do |r|
-      r.Play 'https://acestowncarservice.com/calltest/screen/aces_intro_01182015.wav', loop: '1'
+      r.Play 'http://acestowncarservice.com/calltest/screen/aces_intro_01182015.wav', loop: '1'
       r.Dial callerId: twilio_number, action: '/call_routing/dial' do
         r.Number driver_number, url: '/call_routing/screen'
       end
