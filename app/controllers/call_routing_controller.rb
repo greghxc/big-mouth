@@ -15,6 +15,7 @@ class CallRoutingController < ApplicationController
     fail && return unless params['retry'].blank?
     dial_without_screen(@passeger_num) && return if @driver_num == (params['From'])
     dial_with_screen(@driver_num) && return if @passeger_num.include?(params['From'])
+    fail
   end
 
   def screen

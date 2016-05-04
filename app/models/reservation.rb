@@ -1,4 +1,6 @@
 class Reservation < ActiveRecord::Base
+  validates_uniqueness_of :number
+
   has_one :driver_number, dependent: :destroy
   has_many :external_numbers, dependent: :destroy
   belongs_to :twilio_number

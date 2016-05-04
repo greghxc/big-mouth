@@ -16,6 +16,8 @@ class ReservationController < ApplicationController
     p_num.reservation = res
     p_num.save
     succeed(p_num.number)
+  rescue
+    fail
   end
 
   def destroy
@@ -28,10 +30,7 @@ class ReservationController < ApplicationController
   private
 
   def pool_number
-    TwilioNumber.where("assigned = ? or assigned is null", false).first
-  end
-
-  def release_number(twilio_number)
+    TwilioNumber.where("assigned = ? or assigned is null", false).order(:updated_at).first
   end
 
   def fail(msg='FAIL')
