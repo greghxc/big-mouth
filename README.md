@@ -1,4 +1,4 @@
-Big Mouth
+Big Mouth ![alt tag](https://circleci.com/gh/:owner/:repo.svg?style=shield&circle-token=:circle-token)
 ================
 
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
