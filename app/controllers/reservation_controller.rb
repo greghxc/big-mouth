@@ -10,8 +10,8 @@ class ReservationController < ApplicationController
     p_num.assigned = true
 
     res = Reservation.new(number: params['number'])
-    res.build_driver_number(number: params['driver_number'])
-    res.external_numbers << ExternalNumber.new(number: params['external_number'])
+    res.build_driver_number(number: clean_number(params['driver_number']))
+    res.external_numbers << ExternalNumber.new(number: clean_number(params['external_number']))
 
     p_num.reservation = res
     p_num.save
@@ -31,6 +31,12 @@ class ReservationController < ApplicationController
 
   def pool_number
     TwilioNumber.where("assigned = ? or assigned is null", false).order(:updated_at).first
+  end
+
+  def clean_number(number)
+    stripped = number.tr('^0-9', '')
+    return "+1#{stripped}" unless stripped.start_with?('1')
+    "+#{stripped}"
   end
 
   def fail(msg='FAIL')
