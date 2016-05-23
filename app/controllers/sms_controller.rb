@@ -1,9 +1,8 @@
 class SmsController < ApplicationController
-  after_filter :set_header
   skip_before_action :verify_authenticity_token
 
-  def send
-    return unless valid?
+  def connect
+    not_valid && return unless valid?
 
     @twilio_num = params['To']
     @sender = params['From']
@@ -23,23 +22,31 @@ class SmsController < ApplicationController
 
   private
   def valid?
-    !params['To'].empty? && !params['From'] && !params['Body']
+    !params['To'].blank? && !params['From'].blank? && !params['Body'].blank?
+  end
+
+  def not_valid
+    render text: 'invalid parameters'
   end
 
   def fail
     fail_msg = 'Sorry, no current reservation found. Please call 206-526-6087 for assistance.'
     send_msg(@sender, fail_msg)
+    render text: fail_msg
   end
 
   def send_to_passenger
     send_msg(@passenger_num, @orig_body)
+    render text: 'sent to passenger'
   end
 
   def send_to_driver
     send_msg(@driver_num, @orig_body)
+    render text: 'sent to driver'
   end
 
   def send_msg(to, msg)
+    @client = Twilio::REST::Client.new account_sid, auth_token
     @client.messages.create(
         from: @twilio_num,
         to: to,
@@ -47,11 +54,4 @@ class SmsController < ApplicationController
     )
   end
 
-  def set_header
-    response.headers["Content-Type"] = "text/xml"
-  end
-
-  def render_twiml(response)
-    render text: response.text
-  end
 end
