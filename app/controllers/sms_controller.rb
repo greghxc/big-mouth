@@ -3,6 +3,8 @@ class SmsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def send
+    return unless valid?
+
     @twilio_num = params['To']
     @sender = params['From']
     @orig_body = params['Body']
@@ -20,6 +22,9 @@ class SmsController < ApplicationController
   end
 
   private
+  def valid?
+    !params['To'].empty? && !params['From'] && !params['Body']
+  end
 
   def fail
     fail_msg = 'Sorry, no current reservation found. Please call 206-526-6087 for assistance.'
