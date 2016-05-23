@@ -46,7 +46,7 @@ class SmsController < ApplicationController
   end
 
   def send_msg(to, msg)
-    @client = Twilio::REST::Client.new account_sid, auth_token
+    @client = Twilio::REST::Client.new
     @client.messages.create(
         from: @twilio_num,
         to: to,
