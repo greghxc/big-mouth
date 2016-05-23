@@ -10,11 +10,11 @@ class CallRoutingController < ApplicationController
     fail && return if t.blank? || !t.assigned
 
     @driver_num = t.reservation.driver_number.number
-    @passeger_num = t.reservation.external_numbers.first.number
+    @passenger_num = t.reservation.external_numbers.first.number
 
     fail && return unless params['retry'].blank?
-    dial_without_screen(@passeger_num) && return if @driver_num == (params['From'])
-    dial_with_screen(@driver_num) && return if @passeger_num.include?(params['From'])
+    dial_without_screen(@passenger_num) && return if @driver_num == (params['From'])
+    dial_with_screen(@driver_num) && return if @passenger_num.include?(params['From'])
     fail
   end
 

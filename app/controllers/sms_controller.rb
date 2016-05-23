@@ -12,11 +12,11 @@ class SmsController < ApplicationController
     fail && return if t.blank? || !t.assigned
 
     @driver_num = t.reservation.driver_number.number
-    @passeger_num = t.reservation.external_numbers.first.number
+    @passenger_num = t.reservation.external_numbers.first.number
 
     fail && return unless params['retry'].blank?
     send_to_passenger && return if @driver_num == @sender
-    send_to_driver && return if @passeger_num.include?(@sender)
+    send_to_driver && return if @passenger_num.include?(@sender)
     fail
   end
 
