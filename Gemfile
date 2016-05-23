@@ -18,6 +18,10 @@ group :production do
 end
 
 group :development do
+  gem 'better_errors'
+end
+
+group :development, :test do
   gem 'byebug'
   gem 'faker'
   gem 'pry-rails'
@@ -27,7 +31,6 @@ group :development do
   gem 'sqlite3'
   gem 'spring'
   gem 'web-console', '~> 2.0'
-  gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_21]
   gem 'foreman'
   gem 'hub', :require=>nil

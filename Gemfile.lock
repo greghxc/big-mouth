@@ -282,5 +282,8 @@ DEPENDENCIES
   unicorn-rails
   web-console (~> 2.0)
 
+RUBY VERSION
+   ruby 2.1.2p95
+
 BUNDLED WITH
-   1.11.2
+   1.12.2
