@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   get 'voice/connect'
   post 'voice/connect'
 
+  get 'sms/send'
+  post 'sms/send'
+
   get 'reservation/create'
   post 'reservation/create'
 
