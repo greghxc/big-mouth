@@ -19,6 +19,7 @@ end
 
 group :development do
   gem 'better_errors'
+  gem 'web-console', '~> 2.0'
 end
 
 group :development, :test do
@@ -30,7 +31,6 @@ group :development, :test do
   gem 'rubocop'
   gem 'sqlite3'
   gem 'spring'
-  gem 'web-console', '~> 2.0'
   gem 'binding_of_caller', :platforms=>[:mri_21]
   gem 'foreman'
   gem 'hub', :require=>nil
