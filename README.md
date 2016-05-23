@@ -1,4 +1,4 @@
-Big Mouth
+Big Mouth [![Circle CI](https://circleci.com/gh/greghxc/big_mouth.svg?style=shield)](https://circleci.com/gh/greghxc/big_mouth)
 ================
 
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
