@@ -9,7 +9,9 @@ class NumberPoolController < ApplicationController
   end
 
   def destroy
-    TwilioNumber.destroy(number: params['number'])
+    tn = TwilioNumber.find_by_number(params['number'])
+    raise ActionController::RoutingError.new('Not Found') unless tn
+    tn.destroy
     render text: 'ok'
   end
 end
