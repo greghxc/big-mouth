@@ -3,7 +3,7 @@ class CallRoutingController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def dial
-    @fallback_num = '+12065266087'
+    @fallback_num = '+12065188411'
     @twilio_num = params['To']
 
     t = TwilioNumber.find_by_number(@twilio_num)
