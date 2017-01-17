@@ -19,6 +19,7 @@ Rails.application.routes.draw do
 
   get 'reservation/create'
   post 'reservation/create'
+  put 'reservation/:res_num', to: 'reservation#edit'
 
   get 'reservation/destroy'
   post 'reservation/destroy'

@@ -1,4 +1,6 @@
 class ReservationController < ApplicationController
+  skip_before_filter :verify_authenticity_token, :only => [:edit]
+
   def index
     render text: Reservation.all.to_json
   end
@@ -18,6 +20,14 @@ class ReservationController < ApplicationController
     succeed(p_num.number)
   rescue
     fail
+  end
+
+  def edit
+    res = Reservation.find_by_number(params['res_num'])
+    fail && return unless res
+    res.driver_number.number = params['driver_number']
+    res.driver_number.save
+    succeed(res.driver_number.number)
   end
 
   def destroy

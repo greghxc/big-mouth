@@ -26,4 +26,12 @@ RSpec.describe ReservationController, type: :controller do
     expect(r.external_numbers.first.number).to eq(external_number)
     expect(r.driver_number.number).to eq(driver_number)
   end
+
+  it 'edits driver number' do
+    expected_number = '+12064442121'
+    get :create, number: 'ABC1234', external_number: external_number, driver_number: driver_number
+    put :edit, res_num: 'ABC1234', driver_number: expected_number
+    r = Reservation.find_by_number('ABC1234')
+    expect(r.driver_number.number).to eq(expected_number)
+  end
 end
