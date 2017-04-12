@@ -1,0 +1,335 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API V1",
+    "version": "v1"
+  },
+  "paths": {
+    "/number_pool": {
+      "get": {
+        "summary": "Index of pool numbers",
+        "tags": [
+          "Number Pool"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "index",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "number": {
+                    "type": "string"
+                  },
+                  "assigned": {
+                    "type": "boolean"
+                  },
+                  "created_at": {
+                    "type": "string"
+                  },
+                  "updated_at": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Add number to pool",
+        "tags": [
+          "Number Pool"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "number",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "number created"
+          }
+        }
+      }
+    },
+    "/number_pool/{id}": {
+      "get": {
+        "summary": "Number by id",
+        "tags": [
+          "Number Pool"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "number by id",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "number": {
+                  "type": "string"
+                },
+                "assigned": {
+                  "type": "boolean"
+                },
+                "created_at": {
+                  "type": "string"
+                },
+                "updated_at": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete number by id",
+        "tags": [
+          "Number Pool"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "number deleted"
+          }
+        }
+      }
+    },
+    "/reservation": {
+      "get": {
+        "summary": "Index of reservations",
+        "tags": [
+          "Reservations"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "index",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "number": {
+                    "type": "string"
+                  },
+                  "active": {
+                    "type": "boolean"
+                  },
+                  "created_at": {
+                    "type": "string"
+                  },
+                  "updated_at": {
+                    "type": "string"
+                  },
+                  "twilio_number_id": {
+                    "type": "integer"
+                  },
+                  "driver_number": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "number": {
+                        "type": "string"
+                      },
+                      "reservation_id": {
+                        "type": "integer"
+                      },
+                      "created_at": {
+                        "type": "string"
+                      },
+                      "updated_at": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "external_numbers": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        },
+                        "number": {
+                          "type": "string"
+                        },
+                        "created_at": {
+                          "type": "string"
+                        },
+                        "updated_at": {
+                          "type": "string"
+                        },
+                        "reservation_id": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Add reservation",
+        "tags": [
+          "Reservations"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "reservation",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "number": {
+                  "type": "string",
+                  "default": "ABC123"
+                },
+                "driver_number": {
+                  "type": "string",
+                  "default": "+12065552121"
+                },
+                "external_number": {
+                  "type": "string",
+                  "default": "+12065551212"
+                }
+              },
+              "required": [
+                "number",
+                "driver_number",
+                "external_number"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "reservation created",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "number": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "invalid request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reservation/{res_num}": {
+      "put": {
+        "summary": "Edit reservation by reservation number",
+        "tags": [
+          "Reservations"
+        ],
+        "parameters": [
+          {
+            "name": "res_num",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "driver_number",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "reservation updated"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete reservation by reservation number",
+        "tags": [
+          "Reservations"
+        ],
+        "parameters": [
+          {
+            "name": "res_num",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "reservation deleted"
+          }
+        }
+      }
+    }
+  }
+}

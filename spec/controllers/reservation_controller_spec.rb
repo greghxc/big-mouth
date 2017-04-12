@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe ReservationController, type: :controller do
-  let(:twilio_number) { TwilioNumber.create(number: '+12069876543') }
+  let(:twilio_number) { FactoryGirl.create(:twilio_number) }
+  # let(:twilio_number) { TwilioNumber.create(number: '+12069876543') }
   let(:driver_number) { '+12065551212' }
   let(:external_number) { '+12065551213' }
 

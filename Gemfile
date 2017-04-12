@@ -11,6 +11,7 @@ gem 'bootstrap-sass'
 gem 'unicorn'
 gem 'unicorn-rails'
 gem 'twilio-ruby', '~> 4.11.1'
+gem 'rswag'
 
 group :production do
   gem 'pg'
