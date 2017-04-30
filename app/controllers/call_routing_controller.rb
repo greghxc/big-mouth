@@ -45,7 +45,7 @@ class CallRoutingController < ApplicationController
 
   def dial_with_screen(number)
     response = Twilio::TwiML::Response.new do |r|
-      r.Play 'http://acestowncarservice.com/calltest/screen/aces_intro_01182015.wav', loop: '1'
+      r.Play 'http://legacy.acestowncarservice.com/calltest/screen/aces_intro_01182015.wav', loop: '1'
       r.Dial callerId: @twilio_num, action: '/call_routing/dial?retry=1' do
         r.Number @driver_num, url: '/call_routing/screen'
       end
