@@ -30,7 +30,9 @@ class SmsController < ApplicationController
   end
 
   def fail
-    fail_msg = 'Sorry, no current reservation found. Please call 206-526-6087 for assistance.'
+    fail_msg = 'The number you are calling from does not seem to be ' \
+      'associated with any current reservations. Please call 206-518-8411 ' \
+      'or email reservations@acestowncarservice.com for further assistance.'
     send_msg(@sender, fail_msg)
     render text: fail_msg
   end
