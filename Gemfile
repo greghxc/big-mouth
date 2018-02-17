@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 ruby '2.1.2'
-gem 'rails', '4.2.5.1'
+gem 'rails', '4.2.7.1'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
@@ -29,7 +29,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'pry-rescue'
   gem 'rspec-rails'
-  gem 'rubocop'
+  gem 'rubocop', '~> 0.49.0'
   gem 'sqlite3'
   gem 'spring'
   gem 'binding_of_caller', :platforms=>[:mri_21]
