@@ -47,6 +47,8 @@ class SmsController < ApplicationController
     Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
       http.request(request)
     end
+
+    render json: '{}'
   end
 
   private
