@@ -1,3 +1,4 @@
+# SMS Controller for Incoming Twilio Messages
 class SmsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
@@ -20,7 +21,36 @@ class SmsController < ApplicationController
     fail
   end
 
+  def robot_handler
+    require 'net/http'
+    require 'uri'
+
+    not_valid && return unless valid?
+
+    @twilio_num = params['To']
+    @sender = params['From']
+    @orig_body = params['Body']
+
+    msg = "Hey, I'm just a robot. If you need assistance, please call " \
+      '206-518-8411 or email reservations@acestowncarservice.com - thanks!'
+
+    send_msg(@sender, msg)
+
+    uri = URI.parse(ENV['SLACK_ROBOT_URI'])
+    request = Net::HTTP::Post.new(uri)
+    request.body = "payload={\"text\": \"[#{@sender}] #{@orig_body}\"}"
+
+    req_options = {
+      use_ssl: uri.scheme == 'https'
+    }
+
+    Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
+      http.request(request)
+    end
+  end
+
   private
+
   def valid?
     !params['To'].blank? && !params['From'].blank? && !params['Body'].blank?
   end
@@ -30,7 +60,7 @@ class SmsController < ApplicationController
   end
 
   def fail
-    fail_msg = 'The number you are calling from is not recognized. ' \
+    fail_msg = 'The number you are texting from is not recognized. ' \
       'Please call 206-518-8411 or email reservations@acestowncarservice.com ' \
       'for further assistance.'
     send_msg(@sender, fail_msg)
@@ -48,6 +78,8 @@ class SmsController < ApplicationController
   end
 
   def send_msg(to, msg)
+    puts "BOOM #{ENV['TWILIO_SID']}"
+    puts "BOOM #{ENV['TWILIO_TOKEN']}"
     @client = Twilio::REST::Client.new
     @client.messages.create(
         from: @twilio_num,

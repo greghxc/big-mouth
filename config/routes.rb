@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  # mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
   get 'call_routing/dial'
   get 'call_routing/screen'
@@ -19,6 +18,8 @@ Rails.application.routes.draw do
 
   get 'sms/connect'
   post 'sms/connect'
+  get 'sms/robot_handler'
+  post 'sms/robot_handler'
 
   get 'reservation/create'
   post 'reservation/create'
